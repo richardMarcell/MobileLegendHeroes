@@ -1,0 +1,25 @@
+input {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: 3px solid black;
+  outline: none;
+}
+
+#offensive,
+#defensive,
+#utility {
+  margin-bottom: 10px;
+}
+
+ul li input {
+  margin-top: 10px;
+  display: block;
+}
+
+label {
+  display: block;
+  font-size: 20px;
+  font-weight: bolder;
+}

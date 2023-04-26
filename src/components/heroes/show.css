@@ -1,0 +1,46 @@
+.heroImage img {
+  width: 250px;
+  height: 200px;
+  border-radius: 50%;
+}
+
+.heroImage {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 50px;
+  flex-wrap: wrap;
+}
+
+.heroImage h3 {
+  width: 100%;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.heroImage p {
+  width: 80%;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.status > div {
+  width: 1000px;
+  border: 2px solid black;
+  border-radius: 10px;
+  height: 20px;
+  margin: 20px auto;
+}
+
+.status span {
+  display: block;
+  background-color: aqua;
+  height: 100%;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.btn {
+  margin: 20px;
+  width: 200px;
+}
