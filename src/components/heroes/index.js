@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
-import "./index.css";
 import { useNavigate } from "react-router-dom";
+import "./index.css";
 
 const Index = () => {
   const [heroes, setHeroes] = useState([]);
+  const [searchHero, setSearchHero] = useState("");
+  const navigate = useNavigate();
 
   const mobilelegendheroes = () => {
     let url = "http://mobilelegendheroes.test/api/v1/heroes";
@@ -16,9 +17,9 @@ const Index = () => {
           Authorization: Cookies.get("token"),
         },
       })
-      .then((Response) => {
-        setHeroes(Response.data);
-        console.log("heroes.index", Response.data);
+      .then((response) => {
+        setHeroes(response.data);
+        console.log("heroes.index", response.data);
       })
       .catch((error) => console.log("error fetch", error));
   };
@@ -30,21 +31,21 @@ const Index = () => {
           Authorization: Cookies.get("token"),
         },
       })
-      .then((Response) => {
-        console.log(Response);
+      .then((response) => {
+        console.log(response);
       })
       .catch((error) => {
         console.log("error delete", error);
       });
   };
 
-  let navigate = useNavigate();
+  const edit = (hero) => {
+    navigate(`/heroes/${hero.id}/edit`, { state: hero });
+  };
 
   const show = (id) => {
     navigate(`/heroes/${id}`);
   };
-
-  const [searchHero, setSearchHero] = useState("");
 
   const searchHeroes = (heroes) => {
     return heroes.filter((hero) =>
@@ -64,7 +65,6 @@ const Index = () => {
         name="search"
         id="search"
         placeholder="Search a hero"
-        value={searchHero}
         onChange={(event) => setSearchHero(event.target.value)}
       />
       <a href="/heroes/create" className="btn btn-primary" id="tombol">
@@ -85,7 +85,7 @@ const Index = () => {
               <td>{hero.name}</td>
               <td>{hero.description}</td>
               <td>
-                <img src={hero.image} alt="gambar hero" />
+                <img src={`http://mobilelegendheroes.test/${hero.image}`} alt={"hero " + hero.name} />
               </td>
               <td>
                 <button
@@ -96,7 +96,9 @@ const Index = () => {
                 </button>
               </td>
               <td>
-                <button className="btn btn-success">Edit</button>
+                <button onClick={() => edit(hero)} className="btn btn-success">
+                  Edit
+                </button>
               </td>
               <td>
                 <button
