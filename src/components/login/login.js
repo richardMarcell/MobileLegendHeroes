@@ -2,10 +2,10 @@ import React from "react";
 import axios from "axios";
 import "./login.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
-
+import { Alert } from "react-bootstrap";
 
 const Login = () => {
   // state untuk menyimpan data inputan user
@@ -14,8 +14,8 @@ const Login = () => {
     password: "",
   });
 
-  // state untuk menyimpan hasil login post dari API
-  const [userData, setUserData] = useState([]);
+  // state untuk menyimpan pesan kesalahan ketika user melakukan login
+  const [error, setError] = useState("");
 
   // membuat variabel untuk melakukan route ke halama tertentu
   const route = useNavigate();
@@ -39,23 +39,29 @@ const Login = () => {
     axios
       .post(url, formData)
       .then((Response) => {
-        setUserData(Response.date);
-        route("/heroes", {
-          state: [Response.data],
-        });
-        Cookies.set("token", "Bearer" + " " + Response.data.token);
+        Cookies.set("token", "Bearer " + Response.data.token);
         Cookies.set("user_id", Response.data.user.id);
-
+        route("/heroes", {
+          state: [Response.data.user],
+        });
         console.log("user data", Response.data);
       })
-      .catch((error) => console.log("error login", error));
+      .catch((error) => {
+        console.log("error login", error);
+        setError("Invalid email or password");
+      });
   };
 
   return (
     <>
       <h1 className="text-center">Login</h1>
-
-      <form method="POST" className="mx-5" autoComplete="off" onSubmit={authenticate}>
+      {error && <Alert variant="danger">{error}</Alert>}
+      <form
+        method="POST"
+        className="mx-5"
+        autoComplete="off"
+        onSubmit={authenticate}
+      >
         <label htmlFor="email">Email</label>
         <br />
         <input

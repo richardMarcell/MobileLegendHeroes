@@ -15,6 +15,9 @@ const Store = () => {
     image: null,
   });
 
+  const [skills, setSkills] = useState([]);
+
+
 
   const navigate = useNavigate();
 

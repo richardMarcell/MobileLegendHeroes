@@ -53,12 +53,21 @@ const Index = () => {
     );
   };
 
+  const logout = () => {
+    Cookies.remove("token");
+    Cookies.remove("user_id");
+    navigate("/");
+  };
+
   useEffect(() => {
     mobilelegendheroes();
   }, []);
 
   return (
     <div className="container">
+      <button className="btn btn-danger" onClick={logout}>
+        Log Out
+      </button>
       <h1 className="text-center mt-4">Hero List</h1>
       <input
         type="search"
@@ -85,7 +94,10 @@ const Index = () => {
               <td>{hero.name}</td>
               <td>{hero.description}</td>
               <td>
-                <img src={`http://mobilelegendheroes.test/${hero.image}`} alt={"hero " + hero.name} />
+                <img
+                  src={`http://mobilelegendheroes.test/${hero.image}`}
+                  alt={"hero " + hero.name}
+                />
               </td>
               <td>
                 <button

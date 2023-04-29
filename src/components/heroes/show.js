@@ -29,7 +29,7 @@ const Show = () => {
         Back
       </a>
       <div className="heroImage">
-        <img src={hero.image} alt={hero.name} />
+        <img src={`http://mobilelegendheroes.test/${hero.image}`} alt={hero.name} />
         <h3>{hero.name}</h3>
         <p>{hero.description}</p>
       </div>

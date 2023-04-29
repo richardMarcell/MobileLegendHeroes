@@ -30,10 +30,13 @@ const Update = () => {
     setHero({ ...hero, image: e.target.files[0] });
   };
 
+  console.log("token", Cookies.get("token"));
+
   const update = (e) => {
     e.preventDefault();
 
     let formData = new FormData();
+    formData.append("_method", "PUT");
     formData.append("name", hero.name);
     formData.append("description", hero.description);
     formData.append("offensive", hero.stats.offensive);
@@ -41,17 +44,19 @@ const Update = () => {
     formData.append("utility", hero.stats.utility);
     formData.append("image", hero.image);
 
-    axios({
-      method: "PUT",
-      headers: {
-        Authorization: Cookies.get("token"),
-        "Content-Type": "multipart/form-data",
-      },
-      url: `http://mobilelegendheroes.test/api/v1/heroes/${dataState.id}`,
-      data: formData,
-    })
+    axios
+      .post(
+        `http://mobilelegendheroes.test/api/v1/heroes/${dataState.id}`,
+        formData,
+        {
+          headers: {
+            Authorization: Cookies.get("token"),
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      )
       .then((response) => {
-        console.log("store hero", response.data);
+        console.log("update hero", response.data);
         route("/heroes");
       })
       .catch((error) => console.log("error fetch", error));
